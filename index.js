@@ -33,12 +33,16 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
 
+        // Server Collection
+
         const serviceCollection = client.db('Elysium').collection('Services')
 
         // all data from db
 
         app.get('/services', async (req, res) => {
+
             const result = await serviceCollection.find().toArray()
+
             res.send(result)
         })
 
@@ -50,6 +54,7 @@ async function run() {
 
     }
 }
+
 run().catch(console.dir);
 
 
