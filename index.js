@@ -2,7 +2,7 @@ const express = require('express');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 require('dotenv').config();
-const port = process.env.PORT || 7000
+const port = process.env.PORT || 9000
 
 const app = express()
 
@@ -46,6 +46,9 @@ async function run() {
             res.send(result)
         })
 
+
+
+
         // get single data
 
         app.get('/service/:id', async (req, res) => {
@@ -54,6 +57,8 @@ async function run() {
             const result = await serviceCollection.findOne(query)
             res.send(result)
         })
+
+
 
 
         // Send a ping to confirm a successful connection
