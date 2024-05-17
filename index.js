@@ -36,6 +36,7 @@ async function run() {
         // Server Collection
 
         const serviceCollection = client.db('Elysium').collection('Services')
+
         const bookCollection = client.db('Elysium').collection('Bookings')
 
         // all data from db
@@ -65,18 +66,55 @@ async function run() {
             res.send(result)
         })
 
+        // get service data by email
+
+        app.get('/user-service/:email', async (req, res) => {
+            const email = req.params.email
+            const query = { providerEmail: email }
+            const result = await serviceCollection.find(query).toArray()
+            res.send(result)
+        })
+
+        // delete service from db
+
+        app.delete('/service/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await serviceCollection.deleteOne(query)
+            res.send(result)
+        })
+
+        // update Service from db
+
+        app.put('/service/:id', async (req, res) => {
+            const id = req.params.id
+            const updateData = req.body
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updateDoc = {
+                $set: {
+                    ...updateData
+                }
+            }
+            const result = await serviceCollection.updateOne(query, updateDoc, options)
+            res.send(result)
+        })
+
         // post booking data
         app.post('/booking', async (req, res) => {
             const bookData = req.body
             console.log(bookData)
             const result = await bookCollection.insertOne(bookData)
-            res.send(bookData)
+            res.send(result)
         })
         // get booking data
         app.get('/booking', async (req, res) => {
             const result = await bookCollection.find().toArray()
             res.send(result)
         })
+
+
+
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
