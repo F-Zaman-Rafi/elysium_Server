@@ -113,6 +113,13 @@ async function run() {
             res.send(result)
         })
 
+        // get data for booked service
+        app.get('/booked-services/:email', async (req, res) => {
+            const email = req.params.email
+            const query = { userEmail: email }
+            const result = await bookCollection.find(query).toArray()
+            res.send(result)
+        })
 
 
 
