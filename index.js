@@ -8,7 +8,7 @@ const app = express()
 
 
 const corsOption = {
-    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    origin: ['http://localhost:5173', 'http://localhost:5174', 'https://elysiium.web.app'],
     credentials: true,
     optionSuccessStatus: 200
 }
@@ -16,7 +16,6 @@ const corsOption = {
 app.use(cors(corsOption))
 
 app.use(express.json())
-
 
 
 const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ac-esohqc9-shard-00-00.okia5sv.mongodb.net:27017,ac-esohqc9-shard-00-01.okia5sv.mongodb.net:27017,ac-esohqc9-shard-00-02.okia5sv.mongodb.net:27017/?ssl=true&replicaSet=atlas-mrsszx-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0`;
