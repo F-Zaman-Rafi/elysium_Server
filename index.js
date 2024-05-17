@@ -36,6 +36,7 @@ async function run() {
         // Server Collection
 
         const serviceCollection = client.db('Elysium').collection('Services')
+        const bookCollection = client.db('Elysium').collection('Bookings')
 
         // all data from db
 
@@ -46,9 +47,6 @@ async function run() {
             res.send(result)
         })
 
-
-
-
         // get single data
 
         app.get('/service/:id', async (req, res) => {
@@ -58,8 +56,27 @@ async function run() {
             res.send(result)
         })
 
+        // post service Data
 
+        app.post('/services', async (req, res) => {
+            const addService = req.body
+            console.log(addService)
+            const result = await serviceCollection.insertOne(addService)
+            res.send(result)
+        })
 
+        // post booking data
+        app.post('/booking', async (req, res) => {
+            const bookData = req.body
+            console.log(bookData)
+            const result = await bookCollection.insertOne(bookData)
+            res.send(bookData)
+        })
+        // get booking data
+        app.get('/booking', async (req, res) => {
+            const result = await bookCollection.find().toArray()
+            res.send(result)
+        })
 
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
